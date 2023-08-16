@@ -3,6 +3,7 @@ from tkinter import *
 from PIL import ImageTk, Image 
 from autocompl import AutocompleteEntry
 
+
 lista_paises = ["Argentina","Brasil","Canada","Dubai","Espanha","França","Grecia"]
 
 usuario = ""
@@ -19,47 +20,6 @@ root.resizable(0, 0)
 
 #Grid
 root.columnconfigure(0, weight=1) #Coluna vazia
-#root.columnconfigure(1, weight=3) #Coluna dos controles de Campeoes
-#root.columnconfigure(2, weight=3) #Coluna dos controles de Traits
-#root.columnconfigure(3, weight=1) #Coluna vazia
-
-#BindKeys
-#root.bind('<Return>', Add_Champ_Time)
-#root.bind('<Delete>', Del_Champ_Time_bind)
-
-
-#Controles
-#entry = AutocompleteEntry(autocompleteList,root,listboxLength=6, width=32, matchesFunction=matches)
-#entry.grid(row=1, column=1)
-#entry.pack()
-
-#label_time_atual = Label(root,text="Meu Time:",font=('Helvetica bold', 20),fg="black")
-#label_time_atual.grid(row=2, column=1)
-#label_time_atual.pack()
-
-#box_lista_atual = Listbox(root, height=10,width=40)
-#box_lista_atual.grid(row=3, column=1)
-
-#box_lista_atual_sinergia = Listbox(root, height=10,width=40)
-#box_lista_atual_sinergia.grid(row=3, column=2)
-
-#button_del = Button(root, text ="Deletar", command = Del_Champ_Time)
-#button_del.grid(row=4, column=1)
-
-#label_sugestao = Label(root,text="Sugestões:",font=('Helvetica bold', 20),fg="black")
-#label_sugestao.grid(row=5, column=1)
-
-#box_lista_sugestao = Listbox(root, height=10,width=40)
-#box_lista_sugestao.grid(row=6, column=1)
-
-#box_lista_sugestao_sinergia = Listbox(root, height=10,width=40)
-#box_lista_sugestao_sinergia.grid(row=6, column=2)
-
-#button_add = Button(root, text ="Adicionar", command = Add_Champ_Time_Box)
-#button_add.grid(row=7, column=1)
-
-#BindEvents
-#box_lista_sugestao.bind("<<ListboxSelect>>", Sugestao_Traits)
 
 #################
 #Funções 
