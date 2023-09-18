@@ -2,7 +2,7 @@ from tkinter import *
 import re
 
 class AutocompleteEntry(Entry):
-    def __init__(self, autocompleteList, *args, **kwargs):
+    def __init__(self,janela, autocompleteList, *args, **kwargs):
         # Listbox length
         if 'listboxLength' in kwargs:
             self.listboxLength = kwargs['listboxLength']
@@ -22,16 +22,17 @@ class AutocompleteEntry(Entry):
             self.matchesFunction = matches
 
         Entry.__init__(self, *args, **kwargs)
-        self.focus()      
-
+        self.focus()   
+        
+        self.janela = janela
         self.autocompleteList = autocompleteList
-
+        
         self.var = self["textvariable"]
         if self.var == '':
             self.var = self["textvariable"] = StringVar()
 
         self.var.trace('w', self.changed)
-        self.bind("<Right>", self.selection)
+        self.bind("<Return>", self.selection)
         self.bind("<Up>", self.moveUp)
         self.bind("<Down>", self.moveDown)
 
@@ -45,9 +46,10 @@ class AutocompleteEntry(Entry):
             words = self.comparison()
             if words:
                 if not self.listboxUp:
-                    self.listbox = Listbox(width=self["width"], height=self.listboxLength)
+                    self.listbox = Listbox(self.janela,width=self["width"], height=self.listboxLength)
                     self.listbox.bind("<Button-1>", self.selection)
-                    self.listbox.bind("<Right>", self.selection)
+                    self.listbox.bind("<Return>", self.selection)
+                    
                     self.listbox.place(x=self.winfo_x(), y=self.winfo_y() + self.winfo_height())
                     self.listboxUp = True
 
