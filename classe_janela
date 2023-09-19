@@ -1,0 +1,75 @@
+import tkinter as tk
+
+class FormularioApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Formulário")
+        
+        self.pagina_atual = 1
+        
+        self.criar_controles_pagina1()
+        self.criar_controles_pagina2()
+        
+        self.botao_proxima_pagina = tk.Button(self.root, text="Próxima Página", command=self.ir_para_proxima_pagina)
+        self.botao_proxima_pagina.pack()
+        
+    def criar_controles_pagina1(self):
+        self.label_pagina1 = tk.Label(self.root, text="Página 1")
+        self.label_pagina1.pack()
+        
+        self.entry_nome = tk.Entry(self.root, width=30)
+        self.entry_nome.pack()
+        
+        self.entry_idade = tk.Entry(self.root, width=30)
+        self.entry_idade.pack()
+        
+    def criar_controles_pagina2(self):
+        self.label_pagina2 = tk.Label(self.root, text="Página 2")
+        self.label_pagina2.pack()
+        
+        self.entry_email = tk.Entry(self.root, width=30)
+        self.entry_email.pack()
+        
+        self.entry_telefone = tk.Entry(self.root, width=30)
+        self.entry_telefone.pack()
+        
+        self.label_aviso = tk.Label(self.root, text="Página 2 - Preencha os campos abaixo:")
+        self.label_aviso.pack()
+        
+        self.botao_anterior_pagina = tk.Button(self.root, text="Página Anterior", command=self.ir_para_pagina_anterior)
+        self.botao_anterior_pagina.pack()
+        
+        self.esconder_controles_pagina2()
+        
+    def esconder_controles_pagina2(self):
+        self.label_pagina2.pack_forget()
+        self.entry_email.pack_forget()
+        self.entry_telefone.pack_forget()
+        self.label_aviso.pack_forget()
+        self.botao_anterior_pagina.pack_forget()
+        
+    def ir_para_proxima_pagina(self):
+        if self.pagina_atual == 1:
+            self.esconder_controles_pagina1()
+            self.pagina_atual = 2
+        elif self.pagina_atual == 2:
+            self.esconder_controles_pagina2()
+            self.pagina_atual = 1
+            self.botao_proxima_pagina['state'] = 'disabled'
+        
+    def ir_para_pagina_anterior(self):
+        if self.pagina_atual == 2:
+            self.esconder_controles_pagina2()
+            self.pagina_atual = 1
+            self.botao_proxima_pagina['state'] = 'normal'
+            
+    def esconder_controles_pagina1(self):
+        self.label_pagina1.pack_forget()
+        self.entry_nome.pack_forget()
+        self.entry_idade.pack_forget()
+        self.botao_proxima_pagina.pack_forget()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = FormularioApp(root)
+    root.mainloop()
