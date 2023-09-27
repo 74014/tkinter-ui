@@ -1,0 +1,99 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
+import tkinter.font as tkFont
+from tkinter.simpledialog import askstring
+
+class Janela:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Lista de Clientes")
+
+        # Criar o primeiro Treeview
+        self.tree1 = ttk.Treeview(root, columns=("Nome", "Idade", "Email"))
+        self.tree1.heading("#1", text="Nome")
+        self.tree1.heading("#2", text="Idade")
+        self.tree1.heading("#3", text="Email")
+        
+        # Adicionar dados de clientes ao primeiro Treeview
+        self.tree1.insert("", "end", values=("Cliente 1", "30", "cliente1@example.com"))
+        self.tree1.insert("", "end", values=("Cliente 2", "25", "cliente2@example.com"))
+        self.tree1.insert("", "end", values=("Cliente 3", "40", "cliente3@example.com"))
+        self.tree1.insert("", "end", values=("Cliente 4", "35", "cliente4@example.com"))
+        self.tree1.insert("", "end", values=("Cliente 5", "28", "cliente5@example.com"))
+        
+        # Configurar evento de seleção para o primeiro Treeview
+        self.tree1.bind("<ButtonRelease-1>", self.mostrar_info_cliente)
+        
+        # Empacotar o primeiro Treeview
+        self.tree1.pack(side=tk.LEFT)
+
+        # Criar o segundo Treeview
+        self.tree2 = ttk.Treeview(root, columns=("Nome", "Idade", "Email"))
+        self.tree2.heading("#1", text="Nome")
+        self.tree2.heading("#2", text="Idade")
+        self.tree2.heading("#3", text="Email")
+
+        # Definir a fonte para negrito e tamanho 12        
+        self.bold_font = tkFont.Font(family="Arial", size=12, weight="bold")
+        self.normal_font = tkFont.Font(family="Arial", size=12)
+        
+        # Empacotar o segundo Treeview
+        self.tree2.pack(side=tk.RIGHT)
+
+        # Configurar evento de clique duplo para edição
+        self.tree2.bind("<Double-1>", self.iniciar_edicao)
+
+        # Dicionário para rastrear os valores das células editadas
+        self.edited_values = {}
+
+    def mostrar_info_cliente(self, event):
+        item = self.tree1.selection()[0]
+        nome = self.tree1.item(item, "values")[0]
+        idade = self.tree1.item(item, "values")[1]
+        email = self.tree1.item(item, "values")[2]
+
+        # Adicionar a linha selecionada ao segundo Treeview com a fonte em negrito        
+        self.tree2.insert("", "end", values=("Atual:", "", ""), tags=("bold",))
+        self.tree2.insert("", "end", values=(nome, idade, email), tags=("normal",))
+        self.tree2.insert("", "end", values=("", "", ""), tags=("normal",))
+        self.tree2.insert("", "end", values=("Proposto:", "", ""), tags=("bold",))
+        self.tree2.insert("", "end", values=(nome, idade, email), tags=("normal",))
+        self.tree2.insert("", "end", values=("", "", ""), tags=("normal",))
+
+        # Aplicar a fonte em negrito à linha
+        self.tree2.tag_configure("bold", font=self.bold_font)
+        self.tree2.tag_configure("normal", font=self.normal_font)
+
+    def iniciar_edicao(self, event):
+        
+        #Preciso garantir que o clique foi em um campo válido (Uma linha abaixo da linha "Proposto:")
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        item = self.tree2.selection()[0]
+        col = self.tree2.identify_column(event.x)
+        col = col.split("#")[-1] if col else None
+
+        if col:
+            # Obter o valor atual da célula
+            valor_atual = self.tree2.item(item, "values")[int(col) - 1]
+
+            # Solicitar novo valor por meio de uma caixa de diálogo
+            novo_valor = askstring("Edição de Célula", f"Editar valor da coluna {col}:", initialvalue=valor_atual)
+
+            if novo_valor is not None:
+                # Atualizar o valor na célula e no dicionário
+                self.tree2.item(item, values=(novo_valor,), tags=(f"bold_{col}",))
+                self.edited_values[(item, col)] = novo_valor
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Janela(root)
+    root.mainloop()
